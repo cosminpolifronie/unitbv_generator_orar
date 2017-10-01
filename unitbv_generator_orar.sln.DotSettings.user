@@ -1,0 +1,6 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:Boolean x:Key="/Default/RunConfigs/Config/=AE5B8884CB5D6547BF175C9FD0AC49D5/@KeyIndexDefined">True</s:Boolean>
+	<s:String x:Key="/Default/RunConfigs/Config/=AE5B8884CB5D6547BF175C9FD0AC49D5/Type/@EntryValue">project</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=AE5B8884CB5D6547BF175C9FD0AC49D5/Name/@EntryValue">unitbv_generator_orar</s:String>
+	<s:String x:Key="/Default/RunConfigs/Config/=AE5B8884CB5D6547BF175C9FD0AC49D5/ProjectGuid/@EntryValue">CD51323A2349154590A36283E527EEA6</s:String>
+	<s:String x:Key="/Default/RunConfigs/Active/@EntryValue">AE5B8884CB5D6547BF175C9FD0AC49D5</s:String></wpf:ResourceDictionary>

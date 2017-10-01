@@ -11,6 +11,9 @@
     <OutputPath>.</OutputPath>
     <Name>unitbv_generator_orar</Name>
     <RootNamespace>unitbv_generator_orar</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <CommandLineArguments>D:\Works\Repos\unitbv_generator_orar\unitbv_generator_orar\Orar-semI-2017-2018-V1.xlsx D:\Works\Repos\unitbv_generator_orar\unitbv_generator_orar 84 76 64</CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,6 +25,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="unitbv_generator_orar.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="materii.txt" />
+    <Content Include="materii_ignorate.txt" />
+    <Content Include="profesori.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

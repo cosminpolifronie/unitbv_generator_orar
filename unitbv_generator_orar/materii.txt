@@ -1,0 +1,9 @@
+EcDif=Ecua?ii diferen?iale=#CCFF33
+TMI=Teoria ?i metodologia instruirii=#EEEEEE
+Engleza=Englez?=#FEDCC6
+Germana=German?=#FFD966
+TME=Teoria ?i metodologia evalu?rii=#EEEEEE
+POOII=Programare orientat? pe obiecte II=#FF6699
+LF=Limbaje formale ?i automate=#66CCFF
+BD=Baze de date=#99FF99
+AlgGr=Algoritmica grafurilor=#E6CBFF
