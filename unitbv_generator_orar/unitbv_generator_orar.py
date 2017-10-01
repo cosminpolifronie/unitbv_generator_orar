@@ -44,25 +44,27 @@ for i in range(2, len(__header_day) * 2 + 2):
 for i in range(0, len(__header_time) * 2 + 1):
     worksheet.column_dimensions[chr(ord('A') + i)].width = 39
 
+# generam headerele orarului
+# interval: luni-sambata, 8:00-21:50
+# populam orele si legam casutele headerului 2 cate 2
+for i in range(0, len(__header_time)):
+    _letter = chr(ord('B') + i * 2)
+    worksheet[_letter + '1'] = __header_time[i]
+    worksheet.merge_cells(_letter + '1:' + chr(ord(_letter) + 1) + '1')
+
+# populam zilele si legam casutele headerului 2 cate 2
+for i in range(1, len(__header_day) + 1):
+    _number = str(i * 2)
+    worksheet['A' + _number] = __header_day[i - 1]
+    worksheet.merge_cells('A' + _number + ':A' + str(int(_number) + 1))
+
 # setam stilurile celulelor
 for i in range(1, len(__header_day) * 2 + 2):
     for j in range(1, len(__header_time) * 2 + 2):
         _letter = chr(ord('A') + j - 1)
         worksheet[_letter + str(i)].style = cellstyle
 
-# generam headerele orarului
-# interval: luni-sambata, 8:00-21:50
-# populam orele
-for i in range(0, len(__header_time)):
-    _letter = chr(ord('B') + i * 2)
-    worksheet[_letter + '1'] = __header_time[i]
-
-# populam zilele si formatam toate celulele
-for i in range(1, len(__header_day) + 1):
-    _number = str(i * 2)
-    worksheet['A' + _number] = __header_day[i - 1]
-
 # citim grupa
 
 # salvam fisierul
-workbook.save(input('Locația pentru salvarea fișierului generat: ') + 'nume.xlsx')
+workbook.save('nume.xlsx')
