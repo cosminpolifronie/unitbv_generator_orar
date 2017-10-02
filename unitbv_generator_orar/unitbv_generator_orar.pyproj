@@ -12,7 +12,8 @@
     <Name>unitbv_generator_orar</Name>
     <RootNamespace>unitbv_generator_orar</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>D:\Works\Repos\unitbv_generator_orar\unitbv_generator_orar\Orar-semI-2017-2018-V1.xlsx D:\Works\Repos\unitbv_generator_orar\unitbv_generator_orar 84 76 64</CommandLineArguments>
+    <CommandLineArguments>
+    </CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
