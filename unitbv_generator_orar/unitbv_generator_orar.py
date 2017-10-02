@@ -1,4 +1,5 @@
 import openpyxl
+import os
 import sys
 import xlsxwriter
 
@@ -11,7 +12,7 @@ __col_spec = 'B'
 __col_grupa = 'C'
 __col_inceput_cursuri = 'E'
 __font = 'Calibri'
-__marime_font = 22
+__marime_font = 30
 __culoare_border = '#9B9B9B'
 
 
@@ -78,6 +79,7 @@ def get_workbook_cell_format_with_color(workbook, color):
             'italic': False,
             'align': 'center',
             'valign': 'vcenter',
+			'text_wrap': True,
             'border': 5,
             'border_color': __culoare_border,
             'bg_color': color
@@ -107,7 +109,7 @@ def generate_worksheet(worksheet, source, row, version):
     # inaltimea e in puncte (1 punct = 1/72 inch)
     # latimea e in numarul de caractere care incap in acel camp folosind fontul standard
     worksheet.set_column(0, len(__header_time) * 2, 36)
-    worksheet.set_row(0, 79.2)
+    worksheet.set_row(0, 144)
     for i in range(1, len(__header_day) * 2 + 1):
         worksheet.set_row(i, 180)
 
@@ -124,7 +126,7 @@ def generate_worksheet(worksheet, source, row, version):
     # cod orar – versiune
     # an universitar
     # an – specializare – grupa
-    worksheet.write_string(0, 0, str(get_mergedcell_value(source, __coord_cod_orar)).replace(' ', '') + ' – ' + str(version).replace(' ', '') + '\n' + str(get_mergedcell_value(source, __coord_an_universitar)).replace(' ', '') + '\n' + worksheet.get_name().replace('-', ' – '), __bold_format)
+    worksheet.write_string(0, 0, str(get_mergedcell_value(source, __coord_cod_orar)).replace(' ', '') + ' – ' + str(version).replace(' ', '') + '\n' + str(get_mergedcell_value(source, __coord_an_universitar)).replace(' ', '') + '\n' + str(get_mergedcell_value(source, __col_an + str(row))) + ' – ' + str(get_mergedcell_value(source, __col_spec + str(row))) + '\n' + str(get_mergedcell_value(source, __col_grupa + str(row))).replace(' ', ''), __bold_format)
 
     # populam campurile cu continut
     # citim cate o coloana per pas (4 casute, 1 pt.  saptamana para/impara)  
@@ -304,8 +306,10 @@ if __name__ == "__main__":
     if len(sys.argv) < 3:
         sys.exit('Mai putin de 3 argumente!\nFolosire: unitbv_generator_orar.py\n\tcale_orar\n\tfolder_output\n\tprimul_rand_al_grupei_de_generat\n\tprimul_rand_al_grupei_de_generat\n\tetc.')
     
-    # incarcam fisierul cu materii
-    temp_file = open('materii.txt', 'r', encoding='utf-8')
+    current_dir = os.path.dirname(os.path.realpath(__file__))
+	
+	# incarcam fisierul cu materii
+    temp_file = open(current_dir + '\materii.txt', 'r', encoding='utf-8')
     lines = temp_file.readlines()
     for line in lines:
         data = line.split('=')
@@ -313,7 +317,7 @@ if __name__ == "__main__":
     temp_file.close()
             
     # incarcam fisierul cu profesori
-    temp_file = open('profesori.txt', 'r', encoding='utf-8')
+    temp_file = open(current_dir + '\profesori.txt', 'r', encoding='utf-8')
     lines = temp_file.readlines()
     for line in lines:
         data = line.split('=')
@@ -321,7 +325,7 @@ if __name__ == "__main__":
     temp_file.close()
 
     # incarcam fisierul cu materii ignorate
-    temp_file = open('materii_ignorate.txt', 'r', encoding='utf-8')
+    temp_file = open(current_dir + '\materii_ignorate.txt', 'r', encoding='utf-8')
     lines = temp_file.readlines()
     for line in lines:
          __ignored_disciplines.append(line.replace('\n', ''))
@@ -361,6 +365,7 @@ if __name__ == "__main__":
             'italic': False,
             'align': 'center',
             'valign': 'vcenter',
+			'text_wrap': True,
             'border': 5,
             'border_color': __culoare_border
         })
@@ -372,6 +377,7 @@ if __name__ == "__main__":
             'italic': False,
             'align': 'center',
             'valign': 'vcenter',
+			'text_wrap': True,
             'border': 5,
             'border_color': __culoare_border
         })
