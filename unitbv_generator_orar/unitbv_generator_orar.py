@@ -313,7 +313,8 @@ if __name__ == "__main__":
     lines = temp_file.readlines()
     for line in lines:
         data = line.split('=')
-        __disciplines[data[0]] = (data[1], data[2].replace('\n', ''))
+        if len(data) == 3:
+            __disciplines[data[0]] = (data[1], data[2].replace('\n', ''))
     temp_file.close()
             
     # incarcam fisierul cu profesori
@@ -321,7 +322,8 @@ if __name__ == "__main__":
     lines = temp_file.readlines()
     for line in lines:
         data = line.split('=')
-        __professors[data[0]] = data[1].replace('\n', '')
+        if len(data) == 2:
+            __professors[data[0]] = data[1].replace('\n', '')
     temp_file.close()
 
     # incarcam fisierul cu materii ignorate
