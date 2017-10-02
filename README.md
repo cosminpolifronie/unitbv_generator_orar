@@ -1,5 +1,5 @@
 # unitbv_generator_orar
-Scriptul extrage și formatează orarul Universității Transilvania pentru un număr nelimitat de grupe folosind orarul facultății în format general. [Rezultatul](https://i.imgur.com/QaYXCne.png) este un fișier .xlsx cu mai multe sheet-uri (in functie de numărul de grupe alese).
+Scriptul extrage și formatează orarul Universității Transilvania pentru un număr nelimitat de grupe folosind orarul facultății în format general. [Rezultatul](https://i.imgur.com/ZJ3A6WH.png) este un fișier .xlsx cu mai multe sheet-uri (in functie de numărul de grupe alese).
 
 # Convenții
 Programul pleacă de la următoarele premise (țineți cont să fie respectate, pentru funcționarea corectă a programului):
