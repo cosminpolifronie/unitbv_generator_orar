@@ -10,12 +10,13 @@ __col_spec = 'B'
 __col_grupa = 'C'
 __col_inceput_cursuri = 'E'
 
+__font = 'Calibri'
+__marime_font = 22
+__culoare_border = '#9B9B9B'
+
 # variabile
 __header_time = ('8:00 – 9:50', '10:00 – 11:50', '12:00 – 13:50', '14:00 – 15:50', '16:00 – 17:50', '18:00 – 19:50', '20:00 – 21:50')
 __header_day = ('Luni', 'Marți', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă')
-__bold_format = None
-__cell_format = None
-__italic_format = None
 
 # dictionar cu valori tuple
 # {numeprescurtat: (nume intreg, culoare)}
@@ -24,15 +25,17 @@ __ignored_disciplines = []
 __professors = {}
 
 # intoarce un array cu 4 intrari
-# numele materiei
 # C/(S)/[L]
 # sala
+# numele materiei
 # profesor
-def transform_cell_value_in_array(value):
+def transform_cell_value_in_formatted_array(value):
     split_value = str(value).replace(' ', '').split(',')
-    if split_value[0] == 'S':
+    split_value[0], split_value[1] = split_value[1], split_value[0]
+    split_value[1], split_value[2] = split_value[2], split_value[1]
+    if split_value[0].upper() == 'S':
         split_value[0] = '(S)'
-    elif split_value[0] == 'L':
+    elif split_value[0].upper() == 'L':
         split_value[0] = '[L]'
     return split_value
 
@@ -45,14 +48,14 @@ def get_discipline_name(discipline):
 
 def get_professor_name(professor):
     if professor in __professors:
-        return __professors[professor][0]
+        return __professors[professor]
     return professor
 
 
 def get_discipline_color(discipline):
     if discipline in __disciplines:
         return __disciplines[discipline][1]
-    return '#000000'
+    return '#FFFFFF'
 
 
 def get_mergedcell_value(source, coords):
@@ -64,6 +67,29 @@ def get_mergedcell_value(source, coords):
     return source[coords].value
 
 
+def get_workbook_cell_format_with_color(workbook, color):
+    return workbook.add_format({
+            'font_name': __font,
+            'font_size': __marime_font,
+            'bold': False,
+            'italic': False,
+            'align': 'center',
+            'valign': 'vcenter',
+            'border': 5,
+            'border_color': __culoare_border,
+            'bg_color': color
+        })
+
+
+# 1 indexed
+def column_letters_to_integer(column):
+    sum = 0
+    for char in column:
+        sum *= 26
+        sum += ord(char) - ord('A') + 1
+    return sum
+
+
 def generate_worksheet(worksheet, source, row, version):
     # format pagina: ANSI E (44 inch x 34 inch) landscape
     worksheet.set_landscape()
@@ -71,8 +97,10 @@ def generate_worksheet(worksheet, source, row, version):
 
     # inaltime header ora: 1.10 inch
     # latime header zi: 3 inch
-    # inaltime camp: 5 inch (2.5 inch per rand, un camp fiind format din 2 randuri combinate pentru a permite afisarea materiilor din zile impare/pare)
-    # latime camp: 5.62 inch (2.81 inch per coloana, aceeasi poveste ca mai sus, pentru a permite afisarea materiilor care se desfasoara in acelasi timp) 
+    # inaltime camp: 5 inch (2.5 inch per rand, un camp fiind format din 2
+    # randuri combinate pentru a permite afisarea materiilor din zile impare/pare)
+    # latime camp: 5.62 inch (2.81 inch per coloana, aceeasi poveste ca mai
+    # sus, pentru a permite afisarea materiilor care se desfasoara in acelasi timp)
     # inaltimea e in puncte (1 punct = 1/72 inch)
     # latimea e in numarul de caractere care incap in acel camp folosind fontul standard
     worksheet.set_column(0, len(__header_time) * 2, 36)
@@ -90,129 +118,38 @@ def generate_worksheet(worksheet, source, row, version):
         worksheet.merge_range(2 * i + 1, 0, 2 * i + 2, 0, __header_day[i], __bold_format)
 
     # populam campul A1 cu detalii importante
-    # E1 = cod orar
-    # J3 = an universitar
+    # cod orar – versiune
+    # an universitar
+    # an – specializare – grupa
     worksheet.write_string(0, 0, str(get_mergedcell_value(source, __coord_cod_orar)).replace(' ', '') + ' – ' + str(version).replace(' ', '') + '\n' + str(get_mergedcell_value(source, __coord_an_universitar)).replace(' ', '') + '\n' + worksheet.get_name().replace('-', ' – '), __bold_format)
 
     # populam campurile cu continut
-    # citim cate o coloana per pas (4 casute, 2 pt. fiecare saptamana)
-    start_col = ord('E') - ord('A') + 1
+    # citim cate o coloana per pas (4 casute, 1 pt.  saptamana para/impara)
+    
     for day in range(0, len(__header_day)):
         for period in range(0, len(__header_time)):
-            for col in source.iter_cols(start_col + period + day*len(__header_time), start_col + period + day*len(__header_time), row, row+3):
-                first = col[0].value
-                second = col[1].value
-                third = col[2].value
-                forth = col[3].value
+            current_col = column_letters_to_integer(__col_inceput_cursuri) + period + day * len(__header_time)
+            for col in source.iter_cols(current_col, current_col, row, row + 3):
+                # generam un vector de valori
+                values = []
+                for item in col:
+                    values.append(item.value)
 
-                # daca sunt toate liniile goale, atunci nu avem o intrare
-                if first == second == third == forth == None:
-                    worksheet.merge_range(1 + day*2,
-                                          1 + period*2, 
-                                          1 + day*2 + 1, 
-                                          1 + period*2 + 1, 
-                                          '',
-                                          __cell_format)
-
-                # daca prima si a treia linie sunt egale, iar a doua si a patra sunt egale
-                # inseamna ca avem o materii alternante
-                elif first == third and second == forth:
-                    if first != None:
-                        transformed_value_first = transform_cell_value_in_array(first)
-                        if transformed_value_first[2] not in __ignored_disciplines:
-                            format = workbook.add_format({'font_name': 'Calibri',
-                                            'font_size': 22,
-                                            'bold': False,
-                                            'italic': False,
-                                            'align': 'center',
-                                            'valign': 'vcenter',
-                                            'border': 5,
-                                            'border_color': '#9B9B9B',
-                                            'bg_color': get_discipline_color(transformed_value_first[0])
-                                           })
-                            worksheet.merge_range(1 + day*2,
-                                          1 + period*2, 
-                                          1 + day*2, 
-                                          1 + period*2 + 1,
-                                          '',
-                                          format
-                                          )
-                            worksheet.write_rich_string(
-                                1 + day*2,
-                                1 + period*2,
-                                __bold_format,
-                                transformed_value_first[1] + '\n',
-                                __italic_format,
-                                transformed_value_first[2] + '\n',
-                                __bold_format,
-                                get_discipline_name(transformed_value_first[0]) + '\n',
-                                __cell_format,
-                                get_professor_name(transformed_value_first[3])
-                                )
-                        else:
-                            worksheet.merge_range(1 + day*2,
-                                                1 + period*2, 
-                                                1 + day*2, 
-                                                1 + period*2 + 1,
-                                                '',
-                                                __cell_format)
+                # daca ultimele 3 celule sunt goale
+                if values[1] == values[2] == values[3] == None:
+                    # daca si prima celula e goala
+                    if values[0] == None:
+                        # unim toate celulele intr-una singura
+                        worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
+                    # avem o disciplina unica
                     else:
-                        worksheet.merge_range(1 + day*2,
-                                          1 + period*2, 
-                                          1 + day*2, 
-                                          1 + period*2 + 1,
-                                          '',
-                                          __cell_format)
-
-                    if third != None:
-                        transformed_value_third = transform_cell_value_in_array(third)
-                        if transformed_value_third[2] not in __ignored_disciplines:
-                            format = workbook.add_format({'font_name': 'Calibri',
-                                            'font_size': 22,
-                                            'bold': False,
-                                            'italic': False,
-                                            'align': 'center',
-                                            'valign': 'vcenter',
-                                            'border': 5,
-                                            'border_color': '#9B9B9B',
-                                            'bg_color': get_discipline_color(transformed_value_third[0])
-                                           })
-                            worksheet.merge_range(1 + day*2 + 1,
-                                          1 + period*2, 
-                                          1 + day*2 + 1, 
-                                          1 + period*2 + 1,
-                                          '',
-                                          format
-                                          )
-                            worksheet.write_rich_string(
-                                1 + day*2,
-                                1 + period*2,
-                                __bold_format,
-                                transformed_value_third[1] + '\n',
-                                __italic_format,
-                                transformed_value_third[2] + '\n',
-                                __bold_format,
-                                get_discipline_name(transformed_value_third[0]) + '\n',
-                                __cell_format,
-                                get_professor_name(transformed_value_third[3])
-                                )
+                        content = transform_cell_value_in_formatted_array(values[0])
+                        if content[2] not in __ignored_disciplines:
+                            format = get_workbook_cell_format_with_color(workbook, get_discipline_color(content[2]))
+                            worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', format)
+                            worksheet.write_rich_string(1 + day * 2, 1 + period * 2, __bold_text_format, content[0] + '\n', __italic_text_format, content[1] + '\n', __bold_text_format, get_discipline_name(content[2]) + '\n', __text_format, get_professor_name(content[3]), format)
                         else:
-                            worksheet.merge_range(1 + day*2 + 1,
-                                                1 + period*2, 
-                                                1 + day*2 + 1, 
-                                                1 + period*2 + 1,
-                                                '',
-                                                __cell_format)
-                    else:
-                        worksheet.merge_range(1 + day*2 + 1,
-                                          1 + period*2, 
-                                          1 + day*2 + 1, 
-                                          1 + period*2 + 1,
-                                          '',
-                                          __cell_format)
-
-                # daca nu sunt egale, inseamna ca unele din ele difera
-
+                            worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
 
 
 if __name__ == "__main__":
@@ -220,7 +157,7 @@ if __name__ == "__main__":
         sys.exit('Mai putin de 3 argumente!\nFolosire: unitbv_generator_orar.py\n\tcale_orar\n\tfolder_output\n\tprimul_rand_al_grupei_de_generat\n\tprimul_rand_al_grupei_de_generat\n\tetc.')
     
     # incarcam fisierul cu materii
-    temp_file = open('materii.txt', 'r')
+    temp_file = open('materii.txt', 'r', encoding='utf-8')
     lines = temp_file.readlines()
     for line in lines:
         data = line.split('=')
@@ -228,7 +165,7 @@ if __name__ == "__main__":
     temp_file.close()
             
     # incarcam fisierul cu profesori
-    temp_file = open('profesori.txt', 'r')
+    temp_file = open('profesori.txt', 'r', encoding='utf-8')
     lines = temp_file.readlines()
     for line in lines:
         data = line.split('=')
@@ -236,7 +173,7 @@ if __name__ == "__main__":
     temp_file.close()
 
     # incarcam fisierul cu materii ignorate
-    temp_file = open('materii_ignorate.txt', 'r')
+    temp_file = open('materii_ignorate.txt', 'r', encoding='utf-8')
     lines = temp_file.readlines()
     for line in lines:
          __ignored_disciplines.append(line.replace('\n', ''))
@@ -248,50 +185,58 @@ if __name__ == "__main__":
     # generam workbook-ul curent
     workbook = xlsxwriter.Workbook(sys.argv[2] + '\\orar-' + str(get_mergedcell_value(source, __coord_cod_orar)).replace(' ', '') + '.xlsx')
 
-    __bold_format = workbook.add_format(
-        {
-            'font_name': 'Calibri',
-            'font_size': 22,
+    __text_format = workbook.add_format({
+            'font_name': __font,
+            'font_size': __marime_font,
+            'bold': False,
+            'italic': False
+        })
+
+    __bold_text_format = workbook.add_format({
+            'font_name': __font,
+            'font_size': __marime_font,
+            'bold': True,
+            'italic': False
+        })
+
+    __italic_text_format = workbook.add_format({
+            'font_name': __font,
+            'font_size': __marime_font,
+            'bold': False,
+            'italic': True
+        })
+
+    __bold_format = workbook.add_format({
+            'font_name': __font,
+            'font_size': __marime_font,
             'bold': True,
             'italic': False,
             'align': 'center',
             'valign': 'vcenter',
             'border': 5,
-            'border_color': '#9B9B9B'
+            'border_color': __culoare_border
         })
 
-    __italic_format = workbook.add_format(
-        {
-            'font_name': 'Calibri',
-            'font_size': 22,
-            'bold': False,
-            'italic': True,
-            'align': 'center',
-            'valign': 'vcenter',
-            'border': 5,
-            'border_color': '#9B9B9B'
-        })
-
-    __cell_format = workbook.add_format(
-        {
-            'font_name': 'Calibri',
-            'font_size': 22,
+    __cell_format = workbook.add_format({
+            'font_name': __font,
+            'font_size': __marime_font,
             'bold': False,
             'italic': False,
             'align': 'center',
             'valign': 'vcenter',
             'border': 5,
-            'border_color': '#9B9B9B'
+            'border_color': __culoare_border
         })
     
     # extragem versiunea orarului
     version = sys.argv[1].split('-')
     version = version[len(version) - 1].split('.')[0].replace(' ', '')
 
-    # pentru fiecare rand oferit ca parametru generam un nou worksheet in fisier
+    # pentru fiecare rand oferit ca parametru generam un nou worksheet in
+    # fisier
     for row in sys.argv[3:]:
         worksheet = workbook.add_worksheet(str(str(get_mergedcell_value(source, __col_an + str(row))) + '-' + str(get_mergedcell_value(source, __col_spec + str(row))) + '-' + str(get_mergedcell_value(source, __col_grupa + str(row)))).replace(' ', ''))
-        generate_worksheet(worksheet, source, int(row)-1, version)
+        generate_worksheet(worksheet, source, int(row), version)
     
     # salvam fisierul
     workbook.close()

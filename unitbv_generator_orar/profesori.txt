@@ -1,8 +1,8 @@
 Marin_M=Marin Marin
 Voinea_M=Mihaela Voinea
-Campu_A=Adina C�mpu
+Campu_A=Adina Câmpu
 Homana_S=Sabina Homana
-Nanau_C_S=Corina Nan?u
+Nanau_C_S=Corina Nanău
 Marinescu_D_M=Daniela Marinescu
 Ciurea_E=Eleonor Ciurea
 Plajer_I_C=Ioana Plajer
