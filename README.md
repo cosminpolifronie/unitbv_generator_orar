@@ -20,7 +20,8 @@ Programul are nevoie de Python 3 și de librăriile **XLSXWriter** și **openpyx
 
 # Utilizare
 Scriptul trebuie apelat dintr-un Command Prompt în felul următor (e recomandat, în cazul în care aveți spații în parametri, să puneți între ghilimele fiecare parametru):
-`unitbv_generator_orar.py sursă folder_destinație rând_grupă_1 [rând_grupă_2 ...]`
+`cd /d folder_in_care_se_afla_scriptul
+python unitbv_generator_orar.py sursă folder_destinație rând_grupă_1 [rând_grupă_2 ...]`
 
 - **sursă** - reprezintă calea către orarul UNITBV (ex. "D:\Downloads\Browser\Orar-semI-2017-2018-V13.xlsx")
 - **folder_destinație** - reprezintă calea către folderul în care doriți să se genereze orarul pe grupe (ex. "D:\Downloads\Browser") - **programul va genera automat un fișier cu numele "orar-cod_orar.xlsx"**

@@ -62,7 +62,7 @@ def get_discipline_color(discipline):
     return '#FFFFFF'
 
 
-def get_mergedcell_value(source, coords):
+def get_col_merged_cell_value(source, coords):
     for range in source.merged_cell_ranges:
         merged_cells = list(openpyxl.utils.rows_from_range(range))
         for row in merged_cells:
@@ -103,11 +103,14 @@ def generate_worksheet(worksheet, source, row, version):
     # inaltime header ora: 1.10 inch
     # latime header zi: 3 inch
     # inaltime camp: 5 inch (2.5 inch per rand, un camp fiind format din 2
-    # randuri combinate pentru a permite afisarea materiilor din zile impare/pare)
+    # randuri combinate pentru a permite afisarea materiilor din zile
+    # impare/pare)
     # latime camp: 5.62 inch (2.81 inch per coloana, aceeasi poveste ca mai
-    # sus, pentru a permite afisarea materiilor care se desfasoara in acelasi timp)
+    # sus, pentru a permite afisarea materiilor care se desfasoara in acelasi
+    # timp)
     # inaltimea e in puncte (1 punct = 1/72 inch)
-    # latimea e in numarul de caractere care incap in acel camp folosind fontul standard
+    # latimea e in numarul de caractere care incap in acel camp folosind fontul
+    # standard
     worksheet.set_column(0, len(__header_time) * 2, 36)
     worksheet.set_row(0, 144)
     for i in range(1, len(__header_day) * 2 + 1):
@@ -126,10 +129,10 @@ def generate_worksheet(worksheet, source, row, version):
     # cod orar – versiune
     # an universitar
     # an – specializare – grupa
-    worksheet.write_string(0, 0, str(get_mergedcell_value(source, __coord_cod_orar)).replace(' ', '') + ' – ' + str(version).replace(' ', '') + '\n' + str(get_mergedcell_value(source, __coord_an_universitar)).replace(' ', '') + '\n' + str(get_mergedcell_value(source, __col_an + str(row))) + ' – ' + str(get_mergedcell_value(source, __col_spec + str(row))) + '\n' + str(get_mergedcell_value(source, __col_grupa + str(row))).replace(' ', ''), __bold_format)
+    worksheet.write_string(0, 0, str(get_col_merged_cell_value(source, __coord_cod_orar)).replace(' ', '') + ' – ' + str(version).replace(' ', '') + '\n' + str(get_col_merged_cell_value(source, __coord_an_universitar)).replace(' ', '') + '\n' + 'A' + str(get_col_merged_cell_value(source, __col_an + str(row))) + ' – ' + str(get_col_merged_cell_value(source, __col_spec + str(row))) + '\n' + 'G – ' + str(get_col_merged_cell_value(source, __col_grupa + str(row))).replace(' ', ''), __bold_format)
 
     # populam campurile cu continut
-    # citim cate o coloana per pas (4 casute, 1 pt.  saptamana para/impara)  
+    # citim cate o coloana per pas (4 casute, 1 pt.  saptamana para/impara)
     for day in range(0, len(__header_day)):
         for period in range(0, len(__header_time)):
             current_col = column_letters_to_integer(__col_inceput_cursuri) + period + day * len(__header_time)
@@ -139,8 +142,10 @@ def generate_worksheet(worksheet, source, row, version):
                 for item in col:
                     values.append(item.value)
 
-                # variabila pentru a imi putea da seama daca spatiul de la saptamana impara a fost umplut
-                # folosita pt. a uni toate campurile in cazul in care raman goale (materia este ignorata)
+                # variabila pentru a imi putea da seama daca spatiul de la
+                # saptamana impara a fost umplut
+                # folosita pt.  a uni toate campurile in cazul in care raman
+                # goale (materia este ignorata)
                 empty0 = False
 
                 # daca ultimele 3 celule sunt goale
@@ -160,11 +165,10 @@ def generate_worksheet(worksheet, source, row, version):
                             worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
                             empty0 = True
                 else:
-                    # daca nu avem disciplina unica
-
                     # daca materiile din saptamana impara sunt identice
                     if values[0] == values[2]:
-                        # daca materiile sunt nule, atunci unim campurile si nu scriem nimic
+                        # daca materiile sunt nule, atunci unim campurile si nu
+                        # scriem nimic
                         if values[0] == None:
                             worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2, 1 + period * 2 + 1, '', __cell_format)
                             empty0 = True
@@ -179,7 +183,8 @@ def generate_worksheet(worksheet, source, row, version):
                                 empty0 = True
                     # daca materiile din saptamana impara difera
                     else:
-                        # daca prima materie e nula, inseamna ca a doua sigur nu e
+                        # daca prima materie e nula, inseamna ca a doua sigur
+                        # nu e
                         if values[0] == None:
                             content = transform_cell_value_in_formatted_array(values[2])
                             if content[2] not in __ignored_disciplines:
@@ -189,7 +194,8 @@ def generate_worksheet(worksheet, source, row, version):
                             else:
                                 worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2, 1 + period * 2 + 1, '', __cell_format)
                                 empty0 = True
-                        # daca a doua materie e nula, inseaman ca prima sigur nu e
+                        # daca a doua materie e nula, inseaman ca prima sigur
+                        # nu e
                         elif values[2] == None:
                             content = transform_cell_value_in_formatted_array(values[0])
                             if content[2] not in __ignored_disciplines:
@@ -199,7 +205,8 @@ def generate_worksheet(worksheet, source, row, version):
                             else:
                                 worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2, 1 + period * 2 + 1, '', __cell_format)
                                 empty0 = True
-                        # daca ambele materii exista si sunt diferite, le scriem pe ambele
+                        # daca ambele materii exista si sunt diferite, le
+                        # scriem pe ambele
                         else:
                             content0 = transform_cell_value_in_formatted_array(values[0])
                             content2 = transform_cell_value_in_formatted_array(values[2])
@@ -210,25 +217,30 @@ def generate_worksheet(worksheet, source, row, version):
                                 if content2[2] not in __ignored_disciplines:
                                     worksheet.write_rich_string(1 + day * 2, 1 + period * 2, __bold_text_format, content0[0] + '\n', __italic_text_format, content0[1] + '\n', __bold_text_format, get_discipline_name(content0[2]) + '\n', __text_format, get_professor_name(content0[3]), format0)
                                     worksheet.write_rich_string(1 + day * 2, 1 + period * 2 + 1, __bold_text_format, content2[0] + '\n', __italic_text_format, content2[1] + '\n', __bold_text_format, get_discipline_name(content2[2]) + '\n', __text_format, get_professor_name(content2[3]), format2)
-                                # daca a doua disciplina e ignorata, o scriem doar pe prima
+                                # daca a doua disciplina e ignorata, o scriem
+                                # doar pe prima
                                 else:
                                     worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2, 1 + period * 2 + 1, '', format0)
                                     worksheet.write_rich_string(1 + day * 2, 1 + period * 2, __bold_text_format, content0[0] + '\n', __italic_text_format, content0[1] + '\n', __bold_text_format, get_discipline_name(content0[2]) + '\n', __text_format, get_professor_name(content0[3]), format0)
-                            # daca prima disciplina e ignorata, o scriem doar pe a doua
+                            # daca prima disciplina e ignorata, o scriem doar
+                            # pe a doua
                             else:
                                 if content2[2] not in __ignored_disciplines:
                                     worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2, 1 + period * 2 + 1, '', format2)
                                     worksheet.write_rich_string(1 + day * 2, 1 + period * 2, __bold_text_format, content2[0] + '\n', __italic_text_format, content2[1] + '\n', __bold_text_format, get_discipline_name(content2[2]) + '\n', __text_format, get_professor_name(content2[3]), format2)
-                                # daca si a doua disciplina e ignorata, unim celulele si nu scriem nimic
+                                # daca si a doua disciplina e ignorata, unim
+                                # celulele si nu scriem nimic
                                 else:
                                     worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2, 1 + period * 2 + 1, '', __cell_format)
                                     empty0 = True
 
                     # daca materiile din saptamana para sunt identice
                     if values[1] == values[3]:
-                        # daca materiile sunt nule, atunci unim campurile si nu scriem nimic
+                        # daca materiile sunt nule, atunci unim campurile si nu
+                        # scriem nimic
                         if values[1] == None:
-                            # unim toate celulele in cazul in care nu avem nimic scris in saptamana impara
+                            # unim toate celulele in cazul in care nu avem
+                            # nimic scris in saptamana impara
                             if empty0 == True:
                                 worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
                             else:
@@ -240,14 +252,16 @@ def generate_worksheet(worksheet, source, row, version):
                                 worksheet.merge_range(1 + day * 2 + 1, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', format)
                                 worksheet.write_rich_string(1 + day * 2 + 1, 1 + period * 2, __bold_text_format, content[0] + '\n', __italic_text_format, content[1] + '\n', __bold_text_format, get_discipline_name(content[2]) + '\n', __text_format, get_professor_name(content[3]), format)
                             else:
-                                # unim toate celulele in cazul in care nu avem nimic scris in saptamana impara
+                                # unim toate celulele in cazul in care nu avem
+                                # nimic scris in saptamana impara
                                 if empty0 == True:
                                     worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
                                 else:
                                     worksheet.merge_range(1 + day * 2 + 1, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
                     # daca materiile din saptamana para difera
                     else:
-                        # daca prima materie e nula, inseamna ca a doua sigur nu e
+                        # daca prima materie e nula, inseamna ca a doua sigur
+                        # nu e
                         if values[1] == None:
                             content = transform_cell_value_in_formatted_array(values[3])
                             if content[2] not in __ignored_disciplines:
@@ -255,12 +269,14 @@ def generate_worksheet(worksheet, source, row, version):
                                 worksheet.merge_range(1 + day * 2 + 1, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', format)
                                 worksheet.write_rich_string(1 + day * 2 + 1, 1 + period * 2, __bold_text_format, content[0] + '\n', __italic_text_format, content[1] + '\n', __bold_text_format, get_discipline_name(content[2]) + '\n', __text_format, get_professor_name(content[3]), format)
                             else:
-                                # unim toate celulele in cazul in care nu avem nimic scris in saptamana impara
+                                # unim toate celulele in cazul in care nu avem
+                                # nimic scris in saptamana impara
                                 if empty0 == True:
                                     worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
                                 else:
                                     worksheet.merge_range(1 + day * 2 + 1, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
-                        # daca a doua materie e nula, inseaman ca prima sigur nu e
+                        # daca a doua materie e nula, inseaman ca prima sigur
+                        # nu e
                         elif values[3] == None:
                             content = transform_cell_value_in_formatted_array(values[1])
                             if content[2] not in __ignored_disciplines:
@@ -268,12 +284,14 @@ def generate_worksheet(worksheet, source, row, version):
                                 worksheet.merge_range(1 + day * 2 + 1, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', format)
                                 worksheet.write_rich_string(1 + day * 2 + 1, 1 + period * 2, __bold_text_format, content[0] + '\n', __italic_text_format, content[1] + '\n', __bold_text_format, get_discipline_name(content[2]) + '\n', __text_format, get_professor_name(content[3]), format)
                             else:
-                                # unim toate celulele in cazul in care nu avem nimic scris in saptamana impara
+                                # unim toate celulele in cazul in care nu avem
+                                # nimic scris in saptamana impara
                                 if empty0 == True:
                                     worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
                                 else:
                                     worksheet.merge_range(1 + day * 2 + 1, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
-                        # daca ambele materii exista si sunt diferite, le scriem pe ambele
+                        # daca ambele materii exista si sunt diferite, le
+                        # scriem pe ambele
                         else:
                             content1 = transform_cell_value_in_formatted_array(values[1])
                             content3 = transform_cell_value_in_formatted_array(values[3])
@@ -284,18 +302,22 @@ def generate_worksheet(worksheet, source, row, version):
                                 if content3[2] not in __ignored_disciplines:
                                     worksheet.write_rich_string(1 + day * 2 + 1, 1 + period * 2, __bold_text_format, content1[0] + '\n', __italic_text_format, content1[1] + '\n', __bold_text_format, get_discipline_name(content1[2]) + '\n', __text_format, get_professor_name(content1[3]), format1)
                                     worksheet.write_rich_string(1 + day * 2 + 1, 1 + period * 2 + 1, __bold_text_format, content3[0] + '\n', __italic_text_format, content3[1] + '\n', __bold_text_format, get_discipline_name(content3[2]) + '\n', __text_format, get_professor_name(content3[3]), format3)
-                                # daca a doua disciplina e ignorata, o scriem doar pe prima
+                                # daca a doua disciplina e ignorata, o scriem
+                                # doar pe prima
                                 else:
                                     worksheet.merge_range(1 + day * 2 + 1, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', format1)
                                     worksheet.write_rich_string(1 + day * 2 + 1, 1 + period * 2, __bold_text_format, content1[0] + '\n', __italic_text_format, content1[1] + '\n', __bold_text_format, get_discipline_name(content1[2]) + '\n', __text_format, get_professor_name(content1[3]), format1)
-                            # daca prima disciplina e ignorata, o scriem doar pe a doua
+                            # daca prima disciplina e ignorata, o scriem doar
+                            # pe a doua
                             else:
                                 if content3[2] not in __ignored_disciplines:
                                     worksheet.merge_range(1 + day * 2 + 1, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', format3)
                                     worksheet.write_rich_string(1 + day * 2 + 1, 1 + period * 2, __bold_text_format, content3[0] + '\n', __italic_text_format, content3[1] + '\n', __bold_text_format, get_discipline_name(content3[2]) + '\n', __text_format, get_professor_name(content3[3]), format3)
-                                # daca si a doua disciplina e ignorata, unim celulele si nu scriem nimic
+                                # daca si a doua disciplina e ignorata, unim
+                                # celulele si nu scriem nimic
                                 else:
-                                    # unim toate celulele in cazul in care nu avem nimic scris in saptamana impara
+                                    # unim toate celulele in cazul in care nu
+                                    # avem nimic scris in saptamana impara
                                     if empty0 == True:
                                         worksheet.merge_range(1 + day * 2, 1 + period * 2, 1 + day * 2 + 1, 1 + period * 2 + 1, '', __cell_format)
                                     else:
@@ -332,12 +354,16 @@ if __name__ == "__main__":
     for line in lines:
          __ignored_disciplines.append(line.replace('\n', ''))
     temp_file.close()
+	
+	# extragem versiunea orarului
+    version = sys.argv[1].split('-')
+    version = version[len(version) - 1].split('.')[0].replace(' ', '')
 
     # setam sursa orarului
     source = openpyxl.load_workbook(sys.argv[1]).active
         
     # generam workbook-ul curent
-    workbook = xlsxwriter.Workbook(sys.argv[2] + '\\orar-' + str(get_mergedcell_value(source, __coord_cod_orar)).replace(' ', '') + '.xlsx')
+    workbook = xlsxwriter.Workbook(sys.argv[2] + '\\orar-' + str(get_col_merged_cell_value(source, __coord_cod_orar)).replace(' ', '') + '-' + version + '.xlsx')
 
     __text_format = workbook.add_format({
             'font_name': __font,
@@ -383,15 +409,11 @@ if __name__ == "__main__":
             'border': 5,
             'border_color': __culoare_border
         })
-    
-    # extragem versiunea orarului
-    version = sys.argv[1].split('-')
-    version = version[len(version) - 1].split('.')[0].replace(' ', '')
 
     # pentru fiecare rand oferit ca parametru generam un nou worksheet in
     # fisier
     for row in sys.argv[3:]:
-        worksheet = workbook.add_worksheet(str(str(get_mergedcell_value(source, __col_an + str(row))) + '-' + str(get_mergedcell_value(source, __col_spec + str(row))) + '-' + str(get_mergedcell_value(source, __col_grupa + str(row)))).replace(' ', ''))
+        worksheet = workbook.add_worksheet(str(str(get_col_merged_cell_value(source, __col_an + str(row))) + '-' + str(get_col_merged_cell_value(source, __col_spec + str(row))) + '-' + str(get_col_merged_cell_value(source, __col_grupa + str(row)))).replace(' ', ''))
         generate_worksheet(worksheet, source, int(row), version)
     
     # salvam fisierul

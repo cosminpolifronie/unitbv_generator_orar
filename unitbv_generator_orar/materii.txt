@@ -1,9 +1,61 @@
-EcDif=Ecuații diferențiale=#CCFF33
+﻿EcDif=Ecuații diferențiale și sisteme dinamice=#CCFF33
 TMI=Teoria și metodologia instruirii=#EEEEEE
 Engleza=Engleză=#FEDCC6
 Germana=Germană=#FFD966
 TME=Teoria și metodologia evaluării=#EEEEEE
-POOII=Programare orientată pe obiecte II=#FF6699
+POOII=Programare orientată pe obiecte II=#FF7AA6
 LF=Limbaje formale și automate=#66CCFF
 BD=Baze de date=#99FF99
 AlgGr=Algoritmica grafurilor=#E6CBFF
+Algebra=Algebră=#E6CBFF
+Geometrie=Geometrie sintetică=#CCFF33
+Algoritm=Algoritmică=#66CCFF
+Peda=Pedagogie=#EEEEEE
+SD=Structuri de date=#FF7AA6
+Logica=Logică computațională=#99FF99
+FAI=Fundamentele algebrice ale informaticii=#E6CBFF
+FP=Fundamentele programării=#FF7AA6
+Analiza=Analiză matematică=#CCFF33
+AnReala=Analiză reală=#F9F570
+SA=Scriere academică=#D6FCFC
+TSI=Teoria sistemelor informatice=#99FF99
+Birotica=Birotică=#D6FCFC
+ProgrI=Programare logică=#FF7AA6
+AlgAbstr=Algebră abstractă=#E6CBFF
+CalcInt=Calcul integral=#F9F570
+GeomCurb=Geometria curbelor și suprafețelor=#FF6666
+Redact=Redactare și comunicare științifică și profesională=#D6FCFC
+LFTC=Limbaje formale și compilatoare=#66CCFF
+MIP=Medii și instrumente de programare=#FF7AA6
+SO=Sisteme de operare=#99FF99
+EmbSis=Sisteme embedded=#F9F570
+Mecanica=Mecanică=#FF6666
+CercetOp=Cercetări operaționale=#D6FCFC
+CAG=Complemente de algebră și geometrie=#F9F570
+MatFinanc=Matematici financiare=#99FF99
+CompAn=Complemente de analiză complexă=#CCFF33
+SoftMate=Software matematic=#E6CBFF
+IAC=Instruire asistată de calculator=#EEEEEE
+IoT=Internet of Things=#F9F570
+PDistr=Programare distribuită=#FF7AA6
+TWeb=Tehnologii pentru realizarea aplicațiilor web=#E6CBFF
+PrelIm=Procesarea imaginilor=#66CCFF
+IngSistSoft=Inginerie software=#99FF99
+Web=Programare web=#E6CBFF
+Linux=Programare sub Linux=#F9F570
+PHP=Tehnologii pentru realizarea aplicațiilor web=#E6CBFF
+Securit=Securitate=#99FF99
+DreptInfo=Drept în informatică=#D6FCFC
+BDD=Baze de date distribuite=#F9F570
+ABAP=Sisteme informatice (SAP-ABAP)=#FF7AA6
+Statistica=Statistică aplicată=#F9F570
+TGA=Teoria geometrică a funcțiilor analitice=#E6CBFF
+TeorRel=Teoria relativității=#99FF99
+GeomR=Geometrie riemanniană=#CCFF33
+TPF=Teoreme de punct fix=#FF6666
+BTI=Bazele tehnologiilor internet=#99FF99
+ManagProi=Managementul proiectelor in dezvoltarea aplicațiilor web=#FF6666
+TehnMult=Tehnologii de interacționare prin multimedia=#F9F570
+EAW=El. avansate în aplicații web=#E6CBFF
+PDM=Programarea dispozitivelor mobile=#66CCFF
+ASSE=Arhitectura sistemelor software "enterprise"=#99FF99
