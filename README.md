@@ -20,7 +20,9 @@ Programul are nevoie de Python 3 și de librăriile **XLSXWriter** și **openpyx
 
 # Utilizare
 Scriptul trebuie apelat dintr-un Command Prompt în felul următor (e recomandat, în cazul în care aveți spații în parametri, să puneți între ghilimele fiecare parametru):
+
 `cd /d folder_in_care_se_afla_scriptul
+
 python unitbv_generator_orar.py sursă folder_destinație rând_grupă_1 [rând_grupă_2 ...]`
 
 - **sursă** - reprezintă calea către orarul UNITBV (ex. "D:\Downloads\Browser\Orar-semI-2017-2018-V13.xlsx")
@@ -28,15 +30,20 @@ python unitbv_generator_orar.py sursă folder_destinație rând_grupă_1 [rând_
 - **rând_grupă_x** - reprezintă rândul de pe care începe orarul grupei dorite (ex. [în acest caz](https://i.imgur.com/ywVhiHd.png), pentru a genera orarul grupei 10LF271, vom introduce 16)
 
 Exemplu de apel (va genera orarul pentru grupele prezente pe rândurile 16, 24 și 8):
+
 `unitbv_generator_orar.py D:\Downloads\Orar-semI-2017-2018-V13.xlsx D:\Documents 16 24 8`
 
 Orarul extras poate fi customizat folosind cele 3 fișiere care vin impreună cu scriptul (**A FI EDITATE DOAR CU NOTEPAD++ sau cu un editor care poate encoda fișierul în format UTF-8**):
 
 - **materii.txt** - fișierul conține informații despre materiile din orar (numele cu care materia se găsește în orar, numele pe care materia il are în orarul generat și culoarea căsuței din orarul generat) - conținutul trebuie să urmeze sintaxa următoare (o linie separată pentru fiecare intrare):
+
 `nume_materie_în_sursă=nume_materie_la_destinație=#culoare_la_destinație_în_hex`
+
 - **materii_ignorate.txt** - fișierul conține numele din sursă ale materiilor pe care nu le doriți incluse în orarul generat
+
 `nume_materie_în_sursă`
 - **profesori.txt** - fișierul conține numele profesorului așa cum se găsește în orar și numele pe care îl va avea în orarul generat, separate prin "="
+
 `nume_profesor_în_sursă=nume_profesor_la_destinație`
 
 **În cazul în care nu există o intrare corespunzătoare în aceste fișiere, se vor folosi informațiile disponibile în sursă.**
