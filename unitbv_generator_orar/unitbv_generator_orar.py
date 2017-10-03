@@ -1,3 +1,5 @@
+# versiune: 1.3.1
+
 import openpyxl
 import os
 import sys

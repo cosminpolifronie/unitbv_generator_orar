@@ -30,7 +30,7 @@ python unitbv_generator_orar.py sursă folder_destinație rând_grupă_1 [rând_
 Exemplu de apel (va genera orarul pentru grupele prezente pe rândurile 16, 24 și 8):
 `unitbv_generator_orar.py D:\Downloads\Orar-semI-2017-2018-V13.xlsx D:\Documents 16 24 8`
 
-Orarul extras poate fi customizat folosind cele 3 fișiere care vin impreună cu scriptul:
+Orarul extras poate fi customizat folosind cele 3 fișiere care vin impreună cu scriptul (**A FI EDITATE DOAR CU NOTEPAD++ sau cu un editor care poate encoda fișierul în format UTF-8**):
 
 - **materii.txt** - fișierul conține informații despre materiile din orar (numele cu care materia se găsește în orar, numele pe care materia il are în orarul generat și culoarea căsuței din orarul generat) - conținutul trebuie să urmeze sintaxa următoare (o linie separată pentru fiecare intrare):
 `nume_materie_în_sursă=nume_materie_la_destinație=#culoare_la_destinație_în_hex`

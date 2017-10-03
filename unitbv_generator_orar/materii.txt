@@ -1,4 +1,4 @@
-﻿EcDif=Ecuații diferențiale și sisteme dinamice=#CCFF33
+EcDif=Ecuații diferențiale și sisteme dinamice=#CCFF33
 TMI=Teoria și metodologia instruirii=#EEEEEE
 Engleza=Engleză=#FEDCC6
 Germana=Germană=#FFD966
