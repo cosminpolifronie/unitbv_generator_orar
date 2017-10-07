@@ -1,4 +1,4 @@
-# versiune: 1.3.1
+# versiune: 1.4
 
 import openpyxl
 import os
@@ -113,8 +113,8 @@ def generate_worksheet(worksheet, source, row, version):
     # inaltimea e in puncte (1 punct = 1/72 inch)
     # latimea e in numarul de caractere care incap in acel camp folosind fontul
     # standard
-    worksheet.set_column(0, len(__header_time) * 2, 36)
-    worksheet.set_row(0, 144)
+    worksheet.set_column(0, len(__header_time) * 2, 35)
+    worksheet.set_row(0, 170)
     for i in range(1, len(__header_day) * 2 + 1):
         worksheet.set_row(i, 180)
 

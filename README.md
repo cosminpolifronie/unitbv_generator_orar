@@ -5,8 +5,8 @@ Scriptul extrage și formatează orarul Universității Transilvania pentru un n
 Programul pleacă de la următoarele premise (țineți cont să fie respectate, pentru funcționarea corectă a programului):
 
 - aveți instalat Python 3 si librăriile XLSXWriter și openpyxl pentru Python 3
-- folosiți ca sursă un [orar](https://i.imgur.com/25szy1B.png) al [Universității Transilvania](http://www.unitbv.ro), fișier valid .xls/.xlsx, la care aveți drepturi de citire
-- **numele fișierului sursă trebuie să se termine în "-Vx.xls" sau "-Vx.xlsx", deoarece programul preia versiunea orarului din titlu - un exemplu de nume corect este "Orar-semI-2017-2018-V13.xlsx"**
+- folosiți ca sursă un [orar](https://i.imgur.com/25szy1B.png) al [Universității Transilvania](http://www.unitbv.ro), fișier valid .xlsx, la care aveți drepturi de citire
+- **numele fișierului sursă trebuie să se termine în "-Vx.xlsx", deoarece programul preia versiunea orarului din titlu - un exemplu de nume corect este "Orar-semI-2017-2018-V13.xlsx"**
 - **orarul fiecărei grupe trebuie să se întindă pe 4 linii, iar anul, specializarea și grupa trebuie să poată fi accesibile de pe un rând pe care se află și orarul (pe scurt, [anul, specializarea și grupa trebuie să se afle pe același rând cu orarul în sine](https://i.imgur.com/H9ZJMVu.png))**
 - **codul orarului și anul universitar trebuie să fie câmpuri existente separate in orar** - locația se poate seta din script
 - **fișierele "materii.txt", "materii_ignorate.txt" și "profesori.txt" trebuie să fie neapărat prezente lângă script, iar acestea trebuie să conțină o sintaxă corectă**
