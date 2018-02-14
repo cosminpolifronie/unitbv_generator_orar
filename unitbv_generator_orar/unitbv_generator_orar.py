@@ -65,8 +65,8 @@ def get_discipline_color(discipline):
 
 
 def get_col_merged_cell_value(source, coords):
-    for range in source.merged_cell_ranges:
-        merged_cells = list(openpyxl.utils.rows_from_range(range))
+    for range in source.merged_cells.ranges:
+        merged_cells = list(openpyxl.utils.rows_from_range(range.coord))
         for row in merged_cells:
             if coords in row:
                 return source[merged_cells[0][0]].value

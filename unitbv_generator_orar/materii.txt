@@ -59,3 +59,10 @@ TehnMult=Tehnologii de interacționare prin multimedia=#F9F570
 EAW=El. avansate în aplicații web=#E6CBFF
 PDM=Programarea dispozitivelor mobile=#66CCFF
 ASSE=Arhitectura sistemelor software "enterprise"=#99FF99
+Retele=Rețele de calculatoare=#E6CBFF
+SCI=Sisteme computaționale inteligente=#CCFF33
+ProgViz=Programare vizuală în C++=#F9F570
+DS=DS=#EEEEEE
+MVP=Medii vizuale de programare=#FF7AA6
+EmbSyst=Sisteme embedded=#99FF99
+Grafica=Grafică şi prelucrare digitală a imaginilor=#66CCFF
