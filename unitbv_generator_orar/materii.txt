@@ -62,7 +62,14 @@ ASSE=Arhitectura sistemelor software "enterprise"=#99FF99
 Retele=Rețele de calculatoare=#E6CBFF
 SCI=Sisteme computaționale inteligente=#CCFF33
 ProgViz=Programare vizuală în C++=#F9F570
-DS=DS=#EEEEEE
+DS=Didactica specialității=#EEEEEE
 MVP=Medii vizuale de programare=#FF7AA6
 EmbSyst=Sisteme embedded=#99FF99
 Grafica=Grafică şi prelucrare digitală a imaginilor=#66CCFF
+CTC4=Contabilitate consolidată=#E6CBFF
+PPC4=Pachete de programe de contabilitate=#CCFF33
+CTR4=Control financiar=#F9F570
+PRACTICA=Practică=#EEEEEE
+CTII4=Contabilitate financiară aprofundată=#FF7AA6
+LE4=Engleză=#FEDCC6
+FIS4=Fiscalitate=#99FF99
