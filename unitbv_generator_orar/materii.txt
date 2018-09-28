@@ -43,7 +43,7 @@ PrelIm=Procesarea imaginilor=#66CCFF
 IngSistSoft=Inginerie software=#99FF99
 Web=Programare web=#E6CBFF
 Linux=Programare sub Linux=#F9F570
-PHP=Tehnologii pentru realizarea aplicațiilor web=#E6CBFF
+PHP=PHP=#FF7AA6
 Securit=Securitate=#99FF99
 DreptInfo=Drept în informatică=#D6FCFC
 BDD=Baze de date distribuite=#F9F570
@@ -73,3 +73,6 @@ PRACTICA=Practică=#EEEEEE
 CTII4=Contabilitate financiară aprofundată=#FF7AA6
 LE4=Engleză=#FEDCC6
 FIS4=Fiscalitate=#99FF99
+IS=Ingineria softului=#E6CBFF
+PID=Procesarea imaginilor digitale=#66CCFF
+PD=Programare distribuită=#CCFF33
