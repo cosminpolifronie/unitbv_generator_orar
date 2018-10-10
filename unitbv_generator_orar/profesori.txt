@@ -50,3 +50,4 @@ Sandu_F=Florin Sandu
 Henter_R=Ramona Henter
 Florescu_D_M=Daniela Florescu
 German_A_M=Ana-Maria German
+Ionescu_V=Vlad Ionescu
