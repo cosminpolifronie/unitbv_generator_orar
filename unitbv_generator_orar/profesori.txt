@@ -51,3 +51,6 @@ Henter_R=Ramona Henter
 Florescu_D_M=Daniela Florescu
 German_A_M=Ana-Maria German
 Ionescu_V=Vlad Ionescu
+Nistor-Serban_A=Andreea Nistor-Șerban
+Florescu_C=Carmen Florescu
+Ichim_S=Sebastian Ichim
