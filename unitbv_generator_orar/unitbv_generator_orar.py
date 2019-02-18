@@ -1,4 +1,4 @@
-# versiune: 1.4
+# versiune: 1.5
 
 import openpyxl
 import os
@@ -14,7 +14,7 @@ __col_spec = 'B'
 __col_grupa = 'C'
 __col_inceput_cursuri = 'E'
 __font = 'Calibri'
-__marime_font = 30
+__marime_font = 28
 __culoare_border = '#9B9B9B'
 
 
@@ -98,23 +98,21 @@ def column_letters_to_integer(column):
 
 
 def generate_worksheet(worksheet, source, row, version):
-    # format pagina: ANSI E (44 inch x 34 inch) landscape
+    # format pagina: A3 landscape
     worksheet.set_landscape()
-    worksheet.set_paper(26)
+    worksheet.set_paper(8)
+    worksheet.fit_to_pages(1, 1)
+    worksheet.set_margins(left=0.25, right=0.25, top=0.25, bottom=0.25)
+    worksheet.set_header('', {'margin': 0.0})
+    worksheet.set_footer('', {'margin': 0.0})
+    worksheet.center_horizontally()
+    worksheet.center_vertically()
 
-    # inaltime header ora: 1.10 inch
-    # latime header zi: 3 inch
-    # inaltime camp: 5 inch (2.5 inch per rand, un camp fiind format din 2
-    # randuri combinate pentru a permite afisarea materiilor din zile
-    # impare/pare)
-    # latime camp: 5.62 inch (2.81 inch per coloana, aceeasi poveste ca mai
-    # sus, pentru a permite afisarea materiilor care se desfasoara in acelasi
-    # timp)
     # inaltimea e in puncte (1 punct = 1/72 inch)
-    # latimea e in numarul de caractere care incap in acel camp folosind fontul
-    # standard
-    worksheet.set_column(0, len(__header_time) * 2, 35)
-    worksheet.set_row(0, 170)
+    # latimea e in numarul de caractere care incap in acel camp folosind fontul standard
+    # valorile de inaltime/latime sunt puse dupa ochi ca sa umple un A3
+    worksheet.set_column(0, len(__header_time) * 2, 40)
+    worksheet.set_row(0, 210)
     for i in range(1, len(__header_day) * 2 + 1):
         worksheet.set_row(i, 180)
 
@@ -131,7 +129,7 @@ def generate_worksheet(worksheet, source, row, version):
     # cod orar – versiune
     # an universitar
     # an – specializare – grupa
-    worksheet.write_string(0, 0, str(get_col_merged_cell_value(source, __coord_cod_orar)).replace(' ', '') + ' – ' + str(version).replace(' ', '') + '\n' + str(get_col_merged_cell_value(source, __coord_an_universitar)).replace(' ', '') + '\n' + 'A' + str(get_col_merged_cell_value(source, __col_an + str(row))) + ' – ' + str(get_col_merged_cell_value(source, __col_spec + str(row))) + '\n' + 'G – ' + str(get_col_merged_cell_value(source, __col_grupa + str(row))).replace(' ', ''), __bold_format)
+    worksheet.write_string(0, 0, str(get_col_merged_cell_value(source, __coord_cod_orar)).replace(' ', '') + ' – ' + str(version).replace(' ', '') + '\n' + str(get_col_merged_cell_value(source, __coord_an_universitar)).replace(' ', '') + '\n' + 'A' + str(get_col_merged_cell_value(source, __col_an + str(row))) + ' – ' + str(get_col_merged_cell_value(source, __col_spec + str(row))) + '\n' + str(get_col_merged_cell_value(source, __col_grupa + str(row))).replace(' ', ''), __bold_format)
 
     # populam campurile cu continut
     # citim cate o coloana per pas (4 casute, 1 pt.  saptamana para/impara)

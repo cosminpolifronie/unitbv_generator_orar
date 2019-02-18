@@ -76,3 +76,9 @@ FIS4=Fiscalitate=#99FF99
 IS=Ingineria softului=#E6CBFF
 PID=Procesarea imaginilor digitale=#66CCFF
 PD=Programare distribuită=#CCFF33
+SGBD=Baze de date=#99FF99
+IPDM=Android=#FF7AA6
+SP=Design patterns=#66CCFF
+MCL=Pedagogie=#EEEEEE
+MPI=Managementul proiectelor informatice=#E6CBFF
+SSI=Securitatea sistemelor informatice=#F9F570

@@ -54,3 +54,6 @@ Ionescu_V=Vlad Ionescu
 Nistor-Serban_A=Andreea Nistor-Șerban
 Florescu_C=Carmen Florescu
 Ichim_S=Sebastian Ichim
+Duca_D=Delia Duca
+Palasan_T=Toader Pălășan
+Turculet_A_R=Alina Turculeț
